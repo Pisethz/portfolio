@@ -23,6 +23,7 @@ interface ProjectManagerProps {
   onAdd: (project: Omit<Project, "id" | "createdAt">) => void;
   onUpdate: (id: string, updates: Partial<Omit<Project, "id" | "createdAt">>) => void;
   onDelete: (id: string) => void;
+  canEdit?: boolean;
 }
 
 function ProjectForm({
@@ -102,7 +103,7 @@ function ProjectForm({
   );
 }
 
-export function ProjectManager({ projects, onAdd, onUpdate, onDelete }: ProjectManagerProps) {
+export function ProjectManager({ projects, onAdd, onUpdate, onDelete, canEdit = false }: ProjectManagerProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
