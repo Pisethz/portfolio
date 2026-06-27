@@ -3,11 +3,7 @@ import { join } from 'node:path'
 import type { ProfileData, Project } from '@/lib/types'
 import { defaultProfile } from '@/lib/defaults'
 
-// Use /tmp on Vercel (writable but ephemeral); data/ dir locally
-const DATA_DIR = process.env.VERCEL === '1'
-  ? '/tmp/data'
-  : join(process.cwd(), 'data')
-
+const DATA_DIR = join(process.cwd(), 'data')
 
 function ensureDir() {
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true })

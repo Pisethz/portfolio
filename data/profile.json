@@ -1,0 +1,116 @@
+{
+  "name": "Chan Piseth",
+  "title": "IT Support Specialist & Developer",
+  "tagline": "Full-stack developer, IoT builder, and IT support specialist crafting reliable systems from Cambodia.",
+  "email": "pisethch79@gmail.com",
+  "phone": "-----------",
+  "location": "Poi Pet, Banteay Meanchey, Cambodia",
+  "about": {
+    "gender": "Male",
+    "nationality": "Khmer",
+    "dob": "--------",
+    "address": "Gambel Village, Gambel Commune, Serey Sophon Town, Banteay Meanchey",
+    "languages": "Khmer (Native), English (Good)"
+  },
+  "avatar": "",
+  "hardSkills": [
+    "Vue.js",
+    "PHP",
+    "Laravel",
+    "C#",
+    "Node.js",
+    "JavaScript",
+    "Bootstrap",
+    "API (JSON)",
+    "MySQL",
+    "SQL Server",
+    "WebSockets",
+    "Networking",
+    "MikroTik",
+    "Photoshop",
+    "Illustration"
+  ],
+  "softSkills": [
+    "Communication",
+    "Teamwork",
+    "Perseverance",
+    "Problem Solving",
+    "Critical Thinking"
+  ],
+  "experiences": [
+    {
+      "id": "exp-1",
+      "period": "May 2025 – Present",
+      "title": "Technical / IT Support, Networking",
+      "company": "Pojet Technology",
+      "location": "Poi Pet, Cambodia",
+      "bullets": [
+        "IT Support and Networking services"
+      ]
+    },
+    {
+      "id": "exp-2",
+      "period": "March 2025 – May 2025",
+      "title": "IT Support, IT Officer, Database Developer",
+      "company": "Union Tower",
+      "location": "Poi Pet, Cambodia",
+      "bullets": [
+        "Provided IT support and officer duties",
+        "Developed and maintained databases"
+      ]
+    },
+    {
+      "id": "exp-3",
+      "period": "2022 – 2024",
+      "title": "Research & Development (R&D Center)",
+      "company": "Research and Technology Development Center",
+      "location": "Phnom Penh, Cambodia",
+      "bullets": [
+        "Built and Developed an IoT Smart Home system",
+        "Built and Developed an IoT platform for real-time monitoring of industrial mechatronic system",
+        "Built Score keeper for Display and control for NPC robocon contest 2024 platform",
+        "Mechatronic & Automation",
+        "IoT-Agriculture"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-1",
+      "period": "2020 – 2024",
+      "degree": "Bachelor of Computer Science",
+      "school": "National Polytechnic Institute of Cambodia",
+      "location": "Phnom Penh"
+    },
+    {
+      "id": "edu-2",
+      "period": "2020 – 2022",
+      "degree": "Associate Degree of English",
+      "school": "National Polytechnic Institute of Cambodia",
+      "location": "Phnom Penh"
+    },
+    {
+      "id": "edu-3",
+      "period": "2014 – 2020",
+      "degree": "High School Diploma",
+      "school": "Gambel High School",
+      "location": "Banteay Meanchey"
+    }
+  ],
+  "references": [
+    {
+      "id": "ref-1",
+      "name": "Mr. KH OEM Sambath",
+      "position": "Lecturer, Computer Science of NPIC",
+      "tel": "096 248 0632",
+      "email": "sambathkhoem@gmail.com"
+    },
+    {
+      "id": "ref-2",
+      "name": "Mr. LORN Vanneth",
+      "position": "Research Staff of Research and Technology Development Center",
+      "tel": "098 269 006",
+      "email": "lornvanneth@npic.edu.kh"
+    }
+  ]
+}

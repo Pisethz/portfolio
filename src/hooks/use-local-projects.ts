@@ -1,45 +1,32 @@
 import { useState, useEffect, useCallback } from "react";
+import { getProjects, addProject as addProjectServer, updateProject as updateProjectServer, deleteProject as deleteProjectServer } from "@/lib/db";
+import type { Project } from "@/lib/types";
 
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  link?: string;
-  createdAt: string;
-}
-
-const STORAGE_KEY = "portfolio-projects";
+export type { Project } from "@/lib/types";
 
 export function useLocalProjects() {
-  const [projects, setProjects] = useState<Project[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? (JSON.parse(stored) as Project[]) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
-  }, [projects]);
+    getProjects().then((data) => {
+      if (data) {
+        setProjects(data);
+      }
+    }).catch(console.error).finally(() => setLoading(false));
+  }, []);
 
   const addProject = useCallback(
-    (project: Omit<Project, "id" | "createdAt">) => {
-      const newProject: Project = {
-        ...project,
-        id: crypto.randomUUID(),
-        createdAt: new Date().toISOString(),
-      };
+    async (project: Omit<Project, "id" | "createdAt">) => {
+      const newProject = await addProjectServer({ data: project });
       setProjects((prev) => [newProject, ...prev]);
     },
     [],
   );
 
   const updateProject = useCallback(
-    (id: string, updates: Partial<Omit<Project, "id" | "createdAt">>) => {
+    async (id: string, updates: Partial<Omit<Project, "id" | "createdAt">>) => {
+      await updateProjectServer({ data: { id, updates } });
       setProjects((prev) =>
         prev.map((p) => (p.id === id ? { ...p, ...updates } : p)),
       );
@@ -47,9 +34,10 @@ export function useLocalProjects() {
     [],
   );
 
-  const deleteProject = useCallback((id: string) => {
+  const deleteProject = useCallback(async (id: string) => {
+    await deleteProjectServer({ data: id });
     setProjects((prev) => prev.filter((p) => p.id !== id));
   }, []);
 
-  return { projects, addProject, updateProject, deleteProject };
+  return { projects, addProject, updateProject, deleteProject, loading };
 }

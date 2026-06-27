@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { getAdminHash, setAdminHash } from "@/lib/db";
 
 const SESSION_KEY = "portfolio-admin-session";
@@ -11,15 +11,26 @@ async function hash(text: string): Promise<string> {
     .join("");
 }
 
-export function useAdmin() {
+interface AdminContextValue {
+  isAdmin: boolean;
+  hasPassword: boolean;
+  setPassword: (pwd: string) => Promise<void>;
+  login: (pwd: string) => Promise<boolean>;
+  logout: () => void;
+  changePassword: (oldPwd: string, newPwd: string) => Promise<boolean>;
+}
+
+const AdminContext = createContext<AdminContextValue | null>(null);
+
+export function AdminProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [hasPassword, setHasPassword] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     setIsAdmin(sessionStorage.getItem(SESSION_KEY) === "1");
-    getAdminHash().then((hash) => {
-      setHasPassword(!!hash);
+    getAdminHash().then((h) => {
+      setHasPassword(!!h);
     }).catch(console.error);
   }, []);
 
@@ -48,19 +59,26 @@ export function useAdmin() {
     setIsAdmin(false);
   }, []);
 
-  const changePassword = useCallback(
-    async (oldPwd: string, newPwd: string) => {
-      const stored = await getAdminHash();
-      if (stored) {
-        const h = await hash(oldPwd);
-        if (h !== stored) return false;
-      }
-      const nh = await hash(newPwd);
-      await setAdminHash({ data: nh });
-      return true;
-    },
-    [],
-  );
+  const changePassword = useCallback(async (oldPwd: string, newPwd: string) => {
+    const stored = await getAdminHash();
+    if (stored) {
+      const h = await hash(oldPwd);
+      if (h !== stored) return false;
+    }
+    const nh = await hash(newPwd);
+    await setAdminHash({ data: nh });
+    return true;
+  }, []);
 
-  return { isAdmin, hasPassword, setPassword, login, logout, changePassword };
+  return (
+    <AdminContext.Provider value={{ isAdmin, hasPassword, setPassword, login, logout, changePassword }}>
+      {children}
+    </AdminContext.Provider>
+  );
+}
+
+export function useAdmin(): AdminContextValue {
+  const ctx = useContext(AdminContext);
+  if (!ctx) throw new Error("useAdmin must be used within an AdminProvider");
+  return ctx;
 }
